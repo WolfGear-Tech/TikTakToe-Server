@@ -1,33 +1,33 @@
-import socket
+from socket import socket, gethostbyname, AF_INET, SOCK_STREAM
+from threading import Thread
 
-max_connections = 2
-bytes_limit = 1024
 
-def server_program():
-    # get the hostname
-    host = socket.gethostname()
-    port = 5000  # initiate port no above 1024
+SERVER_ADDR = (gethostbyname(socket.gethostname()), 8090)
+ENCODE_FORMAT = "utf-8"
+DISCONECT_MESSAGE = "!DISCONNECT"
+HANDLE_CONNECTION = True
+serverSocket = socket(AF_INET, SOCK_STREAM)
+serverSocket.bind(SERVER_ADDR)
 
-    server_socket = socket.socket()  # get instance
-    # look closely. The bind() function takes tuple as argument
-    server_socket.bind((host, port))  # bind host address and port together
+def ClientConnectionHandlerThread(socketConnection, clientIP):
+    print(f"[NEW CONNECTION] - New connection thread open for the IP: {clientIP} !!")
+    while HANDLE_CONNECTION:
+        recivedMessage = socketConnection.recv(2048).decode(ENCODE_FORMAT)
+        if recivedMessage != DISCONECT_MESSAGE:
+            print(f"[MESSAGE RECIVED] - New Message reciver from client {clientIP}  the new message is: {recivedMessage}")        
+        else:
+            print(f"[DISCONNECT] - Closing the connection thread for the IP: {clientIP} !!")
 
-    # configure how many client the server can listen simultaneously
-    server_socket.listen(max_connections)
-    conn, address = server_socket.accept()  # accept new connection
-    print("Connection from: " + str(address))
+    socketConnection.close()
+    exit()
+
+
+def SocketServerHandler():
+    serverSocket.listen(10)
+    print(f"[LISTENING] - The server is now listening on the IP: {SERVER_ADDR[0]} and the port: {SERVER_ADDR[1]}")
     while True:
-        # receive data stream. it won't accept data packet greater than 1024 bytes
-        data = conn.recv(bytes_limit).decode()
-        if not data:
-            # if data is not received break
-            break
-        print("from connected user: " + str(data))
-        data = input(' -> ')
-        conn.send(data.encode())  # send data to the client
+        clientSocket, clientIP = serverSocket.accept()
+        Thread(target=ClientConnectionHandlerThread, args=(clientSocket, clientIP)).start()
 
-    conn.close()  # close the connection
-
-
-if __name__ == '__main__':
-    server_program()
+if (__name__ == "__main__"):
+    SocketServerHandler()
