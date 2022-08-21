@@ -1,8 +1,8 @@
-from socket import socket, gethostbyname, AF_INET, SOCK_STREAM
+from socket import socket, gethostbyname, gethostname, AF_INET, SOCK_STREAM
 from threading import Thread
 
 
-SERVER_ADDR = (gethostbyname(socket.gethostname()), 8090)
+SERVER_ADDR = (gethostbyname(gethostname()), 8090)
 ENCODE_FORMAT = "utf-8"
 DISCONECT_MESSAGE = "!DISCONNECT"
 HANDLE_CONNECTION = True
@@ -14,9 +14,11 @@ def ClientConnectionHandlerThread(socketConnection, clientIP):
     while HANDLE_CONNECTION:
         recivedMessage = socketConnection.recv(2048).decode(ENCODE_FORMAT)
         if recivedMessage != DISCONECT_MESSAGE:
-            print(f"[MESSAGE RECIVED] - New Message reciver from client {clientIP}  the new message is: {recivedMessage}")        
+            socketConnection.send("200".encode(ENCODE_FORMAT))
+            print(f"[MESSAGE RECIVED] - New Message reciver from client {clientIP}  the new message is: {recivedMessage}")     
         else:
             print(f"[DISCONNECT] - Closing the connection thread for the IP: {clientIP} !!")
+            break
 
     socketConnection.close()
     exit()
@@ -27,7 +29,10 @@ def SocketServerHandler():
     print(f"[LISTENING] - The server is now listening on the IP: {SERVER_ADDR[0]} and the port: {SERVER_ADDR[1]}")
     while True:
         clientSocket, clientIP = serverSocket.accept()
-        Thread(target=ClientConnectionHandlerThread, args=(clientSocket, clientIP)).start()
+        Thread(target=ClientConnectionHandlerThread, args=(clientSocket, clientIP), daemon=True).start()
 
 if (__name__ == "__main__"):
-    SocketServerHandler()
+    try:
+        SocketServerHandler()
+    except :
+        print("[FORCED DISCONNECT] - One of the clients has disconnected !!")
