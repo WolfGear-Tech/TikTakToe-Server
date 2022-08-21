@@ -50,7 +50,7 @@ authors = ["Wolf Gear <opensource@wolfgear.tech>"]
 python = "^3.10"
 loguru = "*"
 PyQt5 = "*"
-
+OtoPy = "*"
 
 [tool.poetry.dev-dependencies]
 bandit = "*"
