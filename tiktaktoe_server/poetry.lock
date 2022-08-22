@@ -322,6 +322,14 @@ optional = false
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*"
 
 [[package]]
+name = "otopy"
+version = "1.6.6"
+description = "A Otoma Systems developed Lib Containing useful Tools and More"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "packaging"
 version = "21.3"
 description = "Core utilities for Python packages"
@@ -750,7 +758,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "8958dae4c31a0db83c22c4315f87ea22cda0fead68a5fdb845749eca6e009f9c"
+content-hash = "0353386096aef27221ed36a1ec3c072562775da473862ad53626ccf0c42d2bc0"
 
 [metadata.files]
 astroid = [
@@ -971,6 +979,10 @@ mypy-extensions = [
 nodeenv = [
     {file = "nodeenv-1.7.0-py2.py3-none-any.whl", hash = "sha256:27083a7b96a25f2f5e1d8cb4b6317ee8aeda3bdd121394e5ac54e498028a042e"},
     {file = "nodeenv-1.7.0.tar.gz", hash = "sha256:e0e7f7dfb85fc5394c6fe1e8fa98131a2473e04311a45afb6508f7cf1836fa2b"},
+]
+otopy = [
+    {file = "OtoPy-1.6.6-py3-none-any.whl", hash = "sha256:1614d4adbb50480070d075822ff3e8867dae6ecbc0514f21bb57022ee2d219dd"},
+    {file = "OtoPy-1.6.6.tar.gz", hash = "sha256:807eedd6fdbd7ad750e2a122de2727cd0280a02d6e7ba63e66093f646816e6ff"},
 ]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
