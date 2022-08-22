@@ -1,3 +1,3 @@
 #!/bin/sh
 echo ">>> Starting Server"
-python main.py
+python /server/TikTakToe/main.py
