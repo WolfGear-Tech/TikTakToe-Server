@@ -48,8 +48,6 @@ authors = ["Wolf Gear <opensource@wolfgear.tech>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-loguru = "*"
-PyQt5 = "*"
 OtoPy = "*"
 
 [tool.poetry.dev-dependencies]
@@ -68,6 +66,7 @@ pytest-mock = "*"
 pytest-freezegun = "*"
 pytest-lazy-fixture = "*"
 pytest-pylint = "*"
+pytest-socket = "*"
 requests-mock = "*"
 
 [build-system]
