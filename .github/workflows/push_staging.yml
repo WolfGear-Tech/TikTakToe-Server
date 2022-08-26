@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Build and Deploy alpha image:
+  build and deploy alpha image:
     runs-on: ubuntu-latest
     steps:
       -
