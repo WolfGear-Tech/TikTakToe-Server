@@ -1,4 +1,4 @@
-name: ci
+name: Deploy Docker latest image
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build_and_deploy_latest_image:
     runs-on: ubuntu-latest
     steps:
       -
@@ -34,4 +34,18 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tiktaktoe_server:latest
           cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tiktaktoe_server:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tiktaktoe_server:buildcache,mode=max
+
+      -
+        name: Deploy image to server
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.OTOMA_SERVER_ADDR }}
+          username: ${{ secrets.OTOMA_SERVER_USER }}
+          password: ${{ secrets.OTOMA_SERVER_PASSWORD }}
+          script: |
+            docker rm $(docker stop $(docker ps -a -q --filter ancestor=wolfgear/tiktaktoe_server:latest))
+            docker rmi wolfgear/tiktaktoe_server:latest
+            docker pull wolfgear/tiktaktoe_server:latest
+            docker run -p 8098:8090 -d wolfgear/tiktaktoe_server:latest
+
 
