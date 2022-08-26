@@ -37,11 +37,15 @@ jobs:
 
       -
         name: Deploy image to server
-        run: |
-          ssh ${{ secrets.OTOMA_SERVER_USER }}@${{ secrets.OTOMA_SERVER_ADDR }}
-          ${{ secrets.OTOMA_SERVER_PASSWORD }}
-          docker rm $(docker stop $(docker ps -a -q --filter ancestor=wolfgear/tiktaktoe_server:alpha))
-          docker rmi wolfgear/tiktaktoe_server:alpha
-          docker pull wolfgear/tiktaktoe_server:alpha
-          docker run -p 8090:8090 -d wolfgear/tiktaktoe_server:alpha
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.OTOMA_SERVER_ADDR }}
+          username: ${{ secrets.OTOMA_SERVER_USER }}
+          password: ${{ secrets.OTOMA_SERVER_PASSWORD }}
+          script: |
+            docker rm $(docker stop $(docker ps -a -q --filter ancestor=wolfgear/tiktaktoe_server:alpha))
+            docker rmi wolfgear/tiktaktoe_server:alpha
+            docker pull wolfgear/tiktaktoe_server:alpha
+            docker run -p 8098:8090 -d wolfgear/tiktaktoe_server:alpha
+
 
