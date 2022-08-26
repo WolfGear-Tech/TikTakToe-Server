@@ -38,9 +38,10 @@ jobs:
       -
         name: Deploy image to server
         run: |
-          ssh ${{OTOMA_SERVER_USER}}@${{OTOMA_SERVER_ADDR}}
-          ${{OTOMA_SERVER_PASSWORD}}
+          ssh ${{ secrets.OTOMA_SERVER_USER }}@${{ secrets.OTOMA_SERVER_ADDR }}
+          ${{ secrets.OTOMA_SERVER_PASSWORD }}
           docker rm $(docker stop $(docker ps -a -q --filter ancestor=wolfgear/tiktaktoe_server:alpha))
           docker rmi wolfgear/tiktaktoe_server:alpha
           docker pull wolfgear/tiktaktoe_server:alpha
           docker run -p 8090:8090 -d wolfgear/tiktaktoe_server:alpha
+
