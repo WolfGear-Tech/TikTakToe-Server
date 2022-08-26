@@ -1,7 +1,10 @@
 name: publish
+
 on:
   push:
-    branches: [ main ]
+    branches:
+      - 'main'
+
 jobs:
   if: github.event_name == 'push' && !contains(github.event.head_commit.message, 'semantic-release') && !contains(github.event.head_commit.message, 'skip-ci')
   publish:
