@@ -46,6 +46,6 @@ jobs:
             docker rm $(docker stop $(docker ps -a -q --filter ancestor=wolfgear/tiktaktoe_server:latest))
             docker rmi wolfgear/tiktaktoe_server:latest
             docker pull wolfgear/tiktaktoe_server:latest
-            docker run -p 8098:8090 -d wolfgear/tiktaktoe_server:latest
+            docker run -p 8090:8090 -d wolfgear/tiktaktoe_server:latest
 
 
