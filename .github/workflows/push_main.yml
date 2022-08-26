@@ -34,3 +34,4 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tiktaktoe_server:latest
           cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tiktaktoe_server:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tiktaktoe_server:buildcache,mode=max
+
